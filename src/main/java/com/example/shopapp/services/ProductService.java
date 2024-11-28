@@ -10,6 +10,7 @@ import com.example.shopapp.models.ProductImage;
 import com.example.shopapp.repositories.CategoryRepository;
 import com.example.shopapp.repositories.ProductImageRepository;
 import com.example.shopapp.repositories.ProductRepository;
+import com.example.shopapp.response.ProductResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -23,7 +24,7 @@ public class ProductService implements IProductService {
     private final ProductRepository productRepository;
     private final CategoryRepository categoryRepository;
     private final ProductImageRepository productImageRepository;
-    
+
     @Override
     public Product createProduct(ProductDTO productDTO) throws DataNotFoundException {
         Category existingCategory = categoryRepository.findById(productDTO.getCategoryId()).orElseThrow(
@@ -32,6 +33,7 @@ public class ProductService implements IProductService {
                 .name(productDTO.getName())
                 .price(productDTO.getPrice())
                 .thumbnail(productDTO.getThumbnail())
+                .description(productDTO.getDescription())
                 .category(existingCategory)
                 .build();
         return productRepository.save(newProduct);
@@ -43,14 +45,14 @@ public class ProductService implements IProductService {
     }
 
     @Override
-    public Page<Product> getAllProducts(PageRequest pageRequest) {
-        return productRepository.findAll(pageRequest);
+    public Page<ProductResponse> getAllProducts(PageRequest pageRequest) {
+        return productRepository.findAll(pageRequest).map(ProductResponse::fromProduct);
     }
 
     @Override
-    public Product updateProduct(long id, ProductDTO productDTO) throws DataNotFoundException{
+    public Product updateProduct(long id, ProductDTO productDTO) throws DataNotFoundException {
         Product existingProduct = getProductById(id);
-        if(existingProduct != null) {
+        if (existingProduct != null) {
             Category existingCategory = categoryRepository.findById(productDTO.getCategoryId()).orElseThrow(
                     () -> new DataNotFoundException("Cannot find category with id: " + productDTO.getCategoryId()));
             existingProduct.setName(productDTO.getName());
@@ -84,7 +86,7 @@ public class ProductService implements IProductService {
                 .build();
 
         int size = productImageRepository.findByProductId(productImageDTO.getProductId()).size();
-        if (size >= 5){
+        if (size >= 5) {
             throw new InvalidParamException("Number of images must be <= 5");
         }
         return productImageRepository.save(newProductImage);

@@ -10,4 +10,6 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     boolean existsByName(String name);
 
     Page<Product> findAll(Pageable pageable);
+
+    Product deleteById(long id);
 }

@@ -6,15 +6,16 @@ import com.example.shopapp.exceptions.DataNotFoundException;
 import com.example.shopapp.exceptions.InvalidParamException;
 import com.example.shopapp.models.Product;
 import com.example.shopapp.models.ProductImage;
+import com.example.shopapp.response.ProductResponse;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 
 public interface IProductService {
-    public Product createProduct(ProductDTO productDTO) throws DataNotFoundException;
+    Product createProduct(ProductDTO productDTO) throws DataNotFoundException;
 
     Product getProductById(long id) throws DataNotFoundException;
 
-    Page<Product> getAllProducts(PageRequest pageRequest);
+    Page<ProductResponse> getAllProducts(PageRequest pageRequest);
 
     Product updateProduct(long id, ProductDTO productDTO) throws DataNotFoundException;
 
