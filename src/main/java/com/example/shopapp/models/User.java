@@ -31,6 +31,7 @@ public class User extends BaseEntity {
     @Column(name = "password", length = 200, nullable = false)
     String password;
 
+    @Column(name = "is_active")
     boolean active;
 
     @Column(name = "date_of_birth")

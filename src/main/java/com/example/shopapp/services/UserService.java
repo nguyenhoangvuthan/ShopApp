@@ -30,6 +30,7 @@ public class UserService implements IUserService {
                 .dateOfBirth(userDTO.getDateOgBirth())
                 .facebookAccountId(userDTO.getFacebookAccountId())
                 .googleAccountId(userDTO.getGoogleAccountId())
+                .active(true)
                 .build();
 
         Role role = roleRepository.findById(userDTO.getRoleId())

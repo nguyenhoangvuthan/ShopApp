@@ -29,7 +29,7 @@ public class OrderDetails {
     String price;
 
     @Column(name = "number_of_products",nullable = false)
-    String numberOfProducts;
+    int numberOfProducts;
 
     @Column(name = "total_money", nullable = false)
     Float totalMoney;

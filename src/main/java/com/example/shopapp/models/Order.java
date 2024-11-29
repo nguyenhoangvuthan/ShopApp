@@ -5,7 +5,6 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Date;
 
 @Getter
@@ -41,7 +40,7 @@ public class Order {
     String note;
 
     @Column(name = "order_date")
-    LocalDateTime orderDate;
+    Date orderDate;
 
     @Column(nullable = false)
     String status;
@@ -56,7 +55,7 @@ public class Order {
     String shippingAddress;
 
     @Column(name = "shipping_date")
-    Date shippingDate;
+    LocalDate shippingDate;
 
     @Column(name = "tracking_number")
     String trackingNumber;
