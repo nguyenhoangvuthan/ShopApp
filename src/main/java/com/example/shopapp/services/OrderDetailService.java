@@ -9,6 +9,7 @@ import com.example.shopapp.repositories.OrderDetailRepository;
 import com.example.shopapp.repositories.OrderRepository;
 import com.example.shopapp.repositories.ProductRepository;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -30,6 +31,7 @@ public class OrderDetailService implements IOrderDetailService {
                 .order(order)
                 .product(product)
                 .numberOfProducts(orderDetailDTO.getNumberOfProduct())
+                .price(orderDetailDTO.getPrice())
                 .totalMoney(orderDetailDTO.getTotalMoney())
                 .color(orderDetailDTO.getColor())
                 .build();
@@ -45,9 +47,13 @@ public class OrderDetailService implements IOrderDetailService {
 
     @Override
     public OrderDetails updateOrderDetail(Long id, OrderDetailDTO orderDetailDTO) throws DataNotFoundException {
-        return orderDetailRepository.findById(id).orElseThrow(
-                () -> new DataNotFoundException("Order not found")
+        OrderDetails orderDetails = orderDetailRepository.findById(id).orElseThrow(
+                () -> new DataNotFoundException("Cannot find order detail with id:" + id)
         );
+
+        Order order = orderRepository.findById(id).orElseThrow(
+                () -> new DataNotFoundException("Cannot find order with id:" + id));
+        return null;
     }
 
     @Override

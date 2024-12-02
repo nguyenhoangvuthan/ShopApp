@@ -26,7 +26,7 @@ public class OrderDetails {
     Product product;
 
     @Column(nullable = false, length = 300)
-    String price;
+    Float price;
 
     @Column(name = "number_of_products",nullable = false)
     int numberOfProducts;
