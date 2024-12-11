@@ -5,7 +5,10 @@ import com.example.shopapp.models.Category;
 import com.example.shopapp.repositories.CategoryRepository;
 import com.example.shopapp.services.CategoryServices;
 import jakarta.validation.Valid;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -19,6 +22,7 @@ import java.util.List;
 public class CategoryController {
 
     private final CategoryServices categoryServices;
+
     @GetMapping("")
     public ResponseEntity<List<Category>> getAllCategories(
             @RequestParam("page") int page,

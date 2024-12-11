@@ -2,6 +2,7 @@ package com.example.shopapp.controller;
 
 import com.example.shopapp.dto.OrderDetailDTO;
 import com.example.shopapp.exceptions.DataNotFoundException;
+import com.example.shopapp.models.Order;
 import com.example.shopapp.models.OrderDetails;
 import com.example.shopapp.response.OrderDetailResponse;
 import com.example.shopapp.services.IOrderDetailService;
@@ -57,6 +58,12 @@ public class OrderDetailController {
     public ResponseEntity<?> updateOrderDetail(@Valid @RequestBody OrderDetailDTO orderDetailDTO,
                                                @PathVariable Long id) throws DataNotFoundException {
         OrderDetails orderDetails = orderDetailService.updateOrderDetail(id, orderDetailDTO);
-        return ResponseEntity.ok(orderDetails + "updateOrderDetail" + id);
+        return ResponseEntity.ok(OrderDetailResponse.fromOrderDetail(orderDetails));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteOrderDetail(@Valid @PathVariable Long id) {
+        orderDetailService.deleteOrderDetails(id);
+        return ResponseEntity.ok().body("Delete Order Detail with ID: " + id + "successfully");
     }
 }

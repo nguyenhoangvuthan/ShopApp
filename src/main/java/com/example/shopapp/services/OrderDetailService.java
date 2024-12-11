@@ -53,7 +53,18 @@ public class OrderDetailService implements IOrderDetailService {
 
         Order order = orderRepository.findById(id).orElseThrow(
                 () -> new DataNotFoundException("Cannot find order with id:" + id));
-        return null;
+
+        Product product = productRepository.findById(orderDetailDTO.getProductId()).orElseThrow(
+                () -> new DataNotFoundException("Product not found"));
+        OrderDetails updatedOrderDetails = OrderDetails.builder()
+                .price(orderDetailDTO.getPrice())
+                .numberOfProducts(orderDetailDTO.getNumberOfProduct())
+                .totalMoney(orderDetailDTO.getTotalMoney())
+                .color(orderDetailDTO.getColor())
+                .order(order)
+                .product(product)
+                .build();
+        return orderDetailRepository.save(updatedOrderDetails);
     }
 
     @Override
